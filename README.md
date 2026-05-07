@@ -42,4 +42,5 @@ npm run report
 
 ## Next improvement
 
-- Integrate with pipeline
+- Add more test cases
+- Integrate with any tools
