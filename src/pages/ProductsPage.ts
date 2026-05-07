@@ -17,22 +17,24 @@ export class ProductsPage {
   }
 
   async addProductToCart(productName: string) {
-    const product = this.page
-      .locator('.inventory_item')
-      .filter({ hasText: productName });
+    const product = this.getProductByName(productName);
 
     await expect(product).toBeVisible();
     await product.getByRole('button', { name: 'Add to cart' }).click();
   }
 
-  async getFirstProductName() {
-    const name = await this.page
-      .getByTestId('inventory-item-name')
-      .first()
-      .textContent();
+  getProductByName(productName: string): Locator {
+    return this.page
+      .locator('.inventory_item')
+      .filter({ hasText: productName });
+  }
+
+  async getProductName(productName: string) {
+    const product = this.getProductByName(productName);
+    const name = await product.getByTestId('inventory-item-name').textContent();
 
     if (!name) {
-      throw new Error('Unable to read the first product name');
+      throw new Error(`Unable to read product name for ${productName}`);
     }
 
     return name;

@@ -4,6 +4,7 @@ import { CartPage } from '../src/pages/CartPage';
 import { LoginPage } from '../src/pages/LoginPage';
 import { getEnv } from '../src/config/env';
 import { ProductsPage } from '../src/pages/ProductsPage';
+import { products } from '../src/data/products';
 
 test.beforeEach(async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -14,11 +15,11 @@ test.beforeEach(async ({ page }) => {
   await productsPage.expectLoaded();
 });
 
-test('User can add one product to cart', async ({ page }) => {
+test('User can add product to cart', async ({ page }) => {
   const productsPage = new ProductsPage(page);
   const cartPage = new CartPage(page);
 
-  const productName = await productsPage.getFirstProductName();
+  const productName = await productsPage.getProductName(products.bike);
 
   await productsPage.addProductToCart(productName);
   await productsPage.openCart();
@@ -34,7 +35,7 @@ test('User can checkout the cart', async ({ page }) => {
   const cartPage = new CartPage(page);
   const productsPage = new ProductsPage(page);
 
-  const productName = await productsPage.getFirstProductName();
+  const productName = await productsPage.getProductName(products.backpack);
 
   await productsPage.addProductToCart(productName);
   await productsPage.openCart();
