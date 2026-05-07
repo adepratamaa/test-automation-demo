@@ -41,15 +41,19 @@ test.describe('Cart', () => {
     await expect(page).toHaveURL(/\/cart\.html$/);
     await expect(cartPage.title).toHaveText('Your Cart');
 
-    await cartPage.checkout();
+    await cartPage.checkoutButton.click();
     await expect(page).toHaveURL(/\/checkout-step-one\.html$/);
     await expect(cartPage.title).toHaveText('Checkout: Your Information');
 
-    await cartPage.fillCheckoutInformation(
-      faker.person.firstName(),
-      faker.person.lastName(),
-      faker.location.zipCode(),
-    );
+    await cartPage.firstNameInput.pressSequentially(faker.person.firstName(), {
+      delay: 100,
+    });
+    await cartPage.lastNameInput.pressSequentially(faker.person.lastName(), {
+      delay: 100,
+    });
+    await cartPage.postalCodeInput.pressSequentially(faker.location.zipCode(), {
+      delay: 100,
+    });
 
     await cartPage.continueButton.click();
     await expect(page).toHaveURL(/\/checkout-step-two\.html$/);

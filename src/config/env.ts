@@ -1,7 +1,3 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 type EnvKey =
   | 'BASE_URL'
   | 'PASSWORD'

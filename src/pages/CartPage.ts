@@ -30,18 +30,4 @@ export class CartPage {
     this.completeHeader = page.getByTestId('complete-header');
     this.backHomeButton = page.getByTestId('back-to-products');
   }
-
-  async checkout() {
-    await this.checkoutButton.click();
-  }
-
-  async fillCheckoutInformation(
-    firstName: string,
-    lastName: string,
-    postalCode: string,
-  ) {
-    await this.firstNameInput.fill(firstName);
-    await this.lastNameInput.fill(lastName);
-    await this.postalCodeInput.fill(postalCode);
-  }
 }
