@@ -1,6 +1,6 @@
 # Test Automation Demo
 
-This project is an automated UI test framework for Sauce Demo using Playwright
+This project is an automated UI test framework for Sauce Demo using Playwright and write in TypeScript.
 
 ## Framework Structure
 
@@ -22,7 +22,7 @@ This project is an automated UI test framework for Sauce Demo using Playwright
 npm install
 ```
 
-## Install Playwright Browser
+## Install Playwright
 
 ```bash
 npx playwright install
@@ -34,24 +34,12 @@ npx playwright install
 npm run test
 ```
 
-## Run Tests in Headed Mode
-
-```bash
-npm run test:headed
-```
-
-## Open HTML Report
+## Open report
 
 ```bash
 npm run report
 ```
 
-## Open HTML report using Allure
-
-```bash
-npx allure open ./allure-results
-```
-
 ## Next improvement
 
-- Integrate with CI/CD
+- Integrate with pipeline
