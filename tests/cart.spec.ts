@@ -14,59 +14,53 @@ test.beforeEach(async ({ page }) => {
   await productsPage.expectLoaded();
 });
 
-test.describe('Cart', () => {
-  test('User can add one product to cart', async ({ page }) => {
-    const cartPage = new CartPage(page);
-    const productsPage = new ProductsPage(page);
+test('User can add one product to cart', async ({ page }) => {
+  const productsPage = new ProductsPage(page);
+  const cartPage = new CartPage(page);
 
-    const productName = await productsPage.getFirstProductName();
+  const productName = await productsPage.getFirstProductName();
 
-    await productsPage.addProductToCart(productName);
-    await productsPage.openCart();
-    await expect(page).toHaveURL(/\/cart\.html$/);
-    await expect(cartPage.title).toHaveText('Your Cart');
-    await expect(cartPage.cartItem).toHaveCount(1);
-    await expect(cartPage.quantity).toHaveText('1');
-    await expect(cartPage.itemName).toHaveText(productName);
+  await productsPage.addProductToCart(productName);
+  await productsPage.openCart();
+
+  await expect(page).toHaveURL('/cart.html');
+  await expect(cartPage.title).toHaveText('Your Cart');
+  await expect(cartPage.cartItem).toHaveCount(1);
+  await expect(cartPage.quantity).toHaveText('1');
+  await expect(cartPage.itemName).toHaveText(productName);
+});
+
+test('User can checkout the cart', async ({ page }) => {
+  const cartPage = new CartPage(page);
+  const productsPage = new ProductsPage(page);
+
+  const productName = await productsPage.getFirstProductName();
+
+  await productsPage.addProductToCart(productName);
+  await productsPage.openCart();
+  await cartPage.checkoutButton.click();
+  await expect(page).toHaveURL('/checkout-step-one.html');
+  await expect(cartPage.title).toHaveText('Checkout: Your Information');
+
+  await cartPage.firstNameInput.pressSequentially(faker.person.firstName(), {
+    delay: 100,
+  });
+  await cartPage.lastNameInput.pressSequentially(faker.person.lastName(), {
+    delay: 100,
+  });
+  await cartPage.postalCodeInput.pressSequentially(faker.location.zipCode(), {
+    delay: 100,
   });
 
-  test('User can checkout the cart', async ({ page }) => {
-    const cartPage = new CartPage(page);
-    const productsPage = new ProductsPage(page);
+  await cartPage.continueButton.click();
+  await expect(page).toHaveURL('/checkout-step-two.html');
+  await expect(cartPage.title).toHaveText('Checkout: Overview');
 
-    const productName = await productsPage.getFirstProductName();
+  await cartPage.finishButton.click();
+  await expect(page).toHaveURL('/checkout-complete.html');
+  await expect(cartPage.title).toHaveText('Checkout: Complete!');
+  await expect(cartPage.completeHeader).toHaveText('Thank you for your order!');
 
-    await productsPage.addProductToCart(productName);
-    await productsPage.openCart();
-    await expect(page).toHaveURL(/\/cart\.html$/);
-    await expect(cartPage.title).toHaveText('Your Cart');
-
-    await cartPage.checkoutButton.click();
-    await expect(page).toHaveURL(/\/checkout-step-one\.html$/);
-    await expect(cartPage.title).toHaveText('Checkout: Your Information');
-
-    await cartPage.firstNameInput.pressSequentially(faker.person.firstName(), {
-      delay: 100,
-    });
-    await cartPage.lastNameInput.pressSequentially(faker.person.lastName(), {
-      delay: 100,
-    });
-    await cartPage.postalCodeInput.pressSequentially(faker.location.zipCode(), {
-      delay: 100,
-    });
-
-    await cartPage.continueButton.click();
-    await expect(page).toHaveURL(/\/checkout-step-two\.html$/);
-    await expect(cartPage.title).toHaveText('Checkout: Overview');
-
-    await cartPage.finishButton.click();
-    await expect(page).toHaveURL(/\/checkout-complete\.html$/);
-    await expect(cartPage.title).toHaveText('Checkout: Complete!');
-    await expect(cartPage.completeHeader).toHaveText(
-      'Thank you for your order!',
-    );
-
-    await cartPage.backHomeButton.click();
-    await productsPage.expectLoaded();
-  });
+  await cartPage.backHomeButton.click();
+  await productsPage.expectLoaded();
 });

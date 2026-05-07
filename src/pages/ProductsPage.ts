@@ -12,7 +12,7 @@ export class ProductsPage {
   }
 
   async expectLoaded() {
-    await expect(this.page).toHaveURL(/\/inventory\.html$/);
+    await expect(this.page).toHaveURL('/inventory.html');
     await expect(this.title).toHaveText('Products');
   }
 
@@ -35,7 +35,7 @@ export class ProductsPage {
       throw new Error('Unable to read the first product name');
     }
 
-    return name.trim();
+    return name;
   }
 
   async openCart() {
