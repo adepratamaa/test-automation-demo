@@ -4,12 +4,16 @@ export class ProductsPage {
   readonly page: Page;
   readonly title: Locator;
   readonly cartLink: Locator;
+  readonly burgerButton: Locator;
+  readonly aboutBtn: Locator;
 
   // set up products page locators
   constructor(page: Page) {
     this.page = page;
     this.title = page.getByTestId('title');
     this.cartLink = page.getByTestId('shopping-cart-link');
+    this.burgerButton = page.getByTestId('open-menu');
+    this.aboutBtn = page.locator('[href="https://saucelabs.com/"]');
   }
 
   // verify the products page is displayed
