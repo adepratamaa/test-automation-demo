@@ -1,3 +1,4 @@
+// allowed environment variable names used by the test config
 type EnvKey =
   | 'BASE_URL'
   | 'PASSWORD'
@@ -8,6 +9,7 @@ type EnvKey =
   | 'ERROR_USERNAME'
   | 'VISUAL_USERNAME';
 
+// read a required environment variable
 export function getEnv(key: EnvKey) {
   const value = process.env[key];
 

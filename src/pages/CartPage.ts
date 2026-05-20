@@ -15,6 +15,7 @@ export class CartPage {
   readonly completeHeader: Locator;
   readonly backHomeButton: Locator;
 
+  // set up cart and checkout page locators
   constructor(page: Page) {
     this.page = page;
     this.title = page.getByTestId('title');

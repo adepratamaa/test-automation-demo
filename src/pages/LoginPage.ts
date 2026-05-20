@@ -7,6 +7,7 @@ export class LoginPage {
   readonly loginButton: Locator;
   readonly errorMessage: Locator;
 
+  // set up login page locators
   constructor(page: Page) {
     this.page = page;
     this.usernameInput = page.getByTestId('username');
@@ -15,10 +16,12 @@ export class LoginPage {
     this.errorMessage = page.getByTestId('error');
   }
 
+  // open the login page
   async open() {
     await this.page.goto('/');
   }
 
+  // fill login credentials and submit the form
   async login(username: string, password: string) {
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);

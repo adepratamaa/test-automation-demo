@@ -3,9 +3,11 @@ import { loginUsers } from '../src/data/loginUsers';
 import { LoginPage } from '../src/pages/LoginPage';
 import { ProductsPage } from '../src/pages/ProductsPage';
 
+// looping the login process based on the loginUsers[] length
 for (let i = 0; i < loginUsers.length; i++) {
   const user = loginUsers[i];
 
+  // validate login behavior for the current test user
   test(`${user.label} login validation`, async ({ page }) => {
     const loginPage = new LoginPage(page);
     const productsPage = new ProductsPage(page);

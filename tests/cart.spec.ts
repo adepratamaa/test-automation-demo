@@ -6,6 +6,7 @@ import { getEnv } from '../src/config/env';
 import { ProductsPage } from '../src/pages/ProductsPage';
 import { products } from '../src/data/products';
 
+// log in before each cart test
 test.beforeEach(async ({ page }) => {
   const loginPage = new LoginPage(page);
   const productsPage = new ProductsPage(page);
@@ -15,6 +16,7 @@ test.beforeEach(async ({ page }) => {
   await productsPage.expectLoaded();
 });
 
+// verify a product can be added to the cart
 test('User can add product to cart', async ({ page }) => {
   const productsPage = new ProductsPage(page);
   const cartPage = new CartPage(page);
@@ -31,6 +33,7 @@ test('User can add product to cart', async ({ page }) => {
   await expect(cartPage.itemName).toHaveText(productName);
 });
 
+// verify checkout can be completed successfully
 test('User can checkout the cart', async ({ page }) => {
   const cartPage = new CartPage(page);
   const productsPage = new ProductsPage(page);
